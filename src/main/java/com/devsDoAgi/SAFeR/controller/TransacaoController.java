@@ -51,8 +51,8 @@ public class TransacaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TransacaoResponseDTO> atualizarTransacao(@PathVariable Long id) {
-        TransacaoResponseDTO transacaoAtualizada = transacaoService.atualizarTransacao(id);
+    public ResponseEntity<TransacaoResponseDTO> atualizarTransacao(@PathVariable Long id, @RequestBody TransacaoRequestDTO dto) {
+        TransacaoResponseDTO transacaoAtualizada = transacaoService.atualizarTransacao(id, dto);
         return ResponseEntity.ok(transacaoAtualizada);
     }
     

@@ -26,5 +26,6 @@ public class TransacaoRequestDTO {
     private String numAgenciaDestino;
     private String ispbDestino;
     private String cpfCnpjDestino;
+    private int scoreTransacao;
     private boolean transacaoAnalisada;
 }

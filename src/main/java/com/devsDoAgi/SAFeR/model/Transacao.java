@@ -65,6 +65,8 @@ public class Transacao {
 
     private String cpfCnpjDestino;
 
+    private int scoreTransacao;
+
     private boolean transacaoAnalisada;
 
     // Relacionamento com Conta

@@ -63,9 +63,10 @@ public class TransacaoService {
     }
 
     @Transactional
-    public TransacaoResponseDTO atualizarTransacao(Long id) {
+    public TransacaoResponseDTO atualizarTransacao(Long id, TransacaoRequestDTO dto) {
         Transacao transacao = transacaoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Transação não encontrada"));
+        transacao.setScoreTransacao(dto.getScoreTransacao());
         transacao.setTransacaoAnalisada(true);
         Transacao atualizada = transacaoRepository.save(transacao);
         return transacaoMapper.toResponseDTO(atualizada);

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-02T08:29:25-0300",
+    date = "2025-10-02T10:46:49-0300",
     comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.14.3.jar, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
@@ -47,6 +47,7 @@ public class TransacaoMapperImpl implements TransacaoMapper {
         transacao.setNumAgenciaDestino( dto.getNumAgenciaDestino() );
         transacao.setIspbDestino( dto.getIspbDestino() );
         transacao.setCpfCnpjDestino( dto.getCpfCnpjDestino() );
+        transacao.setScoreTransacao( dto.getScoreTransacao() );
         transacao.setTransacaoAnalisada( dto.isTransacaoAnalisada() );
 
         return transacao;
@@ -81,6 +82,7 @@ public class TransacaoMapperImpl implements TransacaoMapper {
         transacaoResponseDTO.setNumAgenciaDestino( transacao.getNumAgenciaDestino() );
         transacaoResponseDTO.setIspbDestino( transacao.getIspbDestino() );
         transacaoResponseDTO.setCpfCnpjDestino( transacao.getCpfCnpjDestino() );
+        transacaoResponseDTO.setScoreTransacao( transacao.getScoreTransacao() );
         transacaoResponseDTO.setTransacaoAnalisada( transacao.isTransacaoAnalisada() );
 
         return transacaoResponseDTO;
