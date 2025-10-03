@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 
 import com.devsDoAgi.SAFeR.dto.TransacaoRequestDTO;
 import com.devsDoAgi.SAFeR.dto.TransacaoResponseDTO;
+import com.devsDoAgi.SAFeR.fraudes.engine.FraudEngine;
+import com.devsDoAgi.SAFeR.fraudes.engine.FraudSummary;
 import com.devsDoAgi.SAFeR.mapper.TransacaoMapper;
 import com.devsDoAgi.SAFeR.model.Conta;
 import com.devsDoAgi.SAFeR.model.Transacao;
@@ -32,6 +34,22 @@ public class TransacaoService {
     @Transactional
     public TransacaoResponseDTO criarTransacao(TransacaoRequestDTO dto) {
         Transacao transacao = transacaoMapper.toEntity(dto);
+        Transacao salva = transacaoRepository.save(transacao);
+        return transacaoMapper.toResponseDTO(salva);
+    }
+
+    @Transactional TransacaoResponseDTO criarEValidarTransacao(TransacaoRequestDTO dto) {
+        Transacao transacao = transacaoMapper.toEntity(dto);
+
+        // Chama o motor de regras
+        FraudEngine engine = new FraudEngine();
+        // Analisa a transação
+        FraudSummary summary = engine.analyze(transacao);
+
+        // Atualiza a transação com o score e marca como analisada
+        transacao.setScoreTransacao(summary.getTotalScore());
+        transacao.setTransacaoAnalisada(true);
+
         Transacao salva = transacaoRepository.save(transacao);
         return transacaoMapper.toResponseDTO(salva);
     }
@@ -70,5 +88,23 @@ public class TransacaoService {
         transacao.setTransacaoAnalisada(true);
         Transacao atualizada = transacaoRepository.save(transacao);
         return transacaoMapper.toResponseDTO(atualizada);
+    }
+
+    @Transactional
+    public TransacaoResponseDTO validarTransacao(Long id) {
+        Transacao transacao = transacaoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Transação não encontrada"));
+                
+            // Chama o motor de regras
+            FraudEngine engine = new FraudEngine();
+            // Analisa a transação
+            FraudSummary summary = engine.analyze(transacao);
+
+            // Atualiza a transação com o score e marca como analisada
+            transacao.setScoreTransacao(summary.getTotalScore());
+            transacao.setTransacaoAnalisada(true);
+                
+        Transacao salva = transacaoRepository.save(transacao);
+        return transacaoMapper.toResponseDTO(salva);
     }
 }
