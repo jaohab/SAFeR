@@ -2,6 +2,7 @@ package com.devsDoAgi.SAFeR.service;
 
 import java.util.List;
 
+import com.devsDoAgi.SAFeR.exception.DeviceNotFound;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -34,7 +35,7 @@ public class DispositivoService {
     @Transactional
     public DispositivoResponseDTO buscarDispositivo(Long id) {
         Dispositivo dispositivo = dispositivoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Dispositivo não encontrado"));
+                .orElseThrow(() -> new DeviceNotFound("Dispositivo não encontrado"));
         return dispositivoMapper.toResponseDTO(dispositivo);
     }
 

@@ -2,6 +2,7 @@ package com.devsDoAgi.SAFeR.service;
 
 import java.util.List;
 
+import com.devsDoAgi.SAFeR.exception.TransactionNotFound;
 import org.springframework.stereotype.Service;
 
 import com.devsDoAgi.SAFeR.repository.ContaRepository;
@@ -57,7 +58,7 @@ public class TransacaoService {
     @Transactional
     public TransacaoResponseDTO buscarPorId(Long id) { 
         Transacao transacao = transacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Transação não encontrada"));
+                .orElseThrow(() -> new TransactionNotFound("Transação não encontrada"));
     return transacaoMapper.toResponseDTO(transacao);
     }
 

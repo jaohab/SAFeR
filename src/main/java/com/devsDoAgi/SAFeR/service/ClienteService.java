@@ -3,6 +3,8 @@ package com.devsDoAgi.SAFeR.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.devsDoAgi.SAFeR.exception.AccounNotFound;
+import com.devsDoAgi.SAFeR.exception.ClientNotFound;
 import org.springframework.stereotype.Service;
 
 import com.devsDoAgi.SAFeR.dto.ClienteRequestDTO;
@@ -34,7 +36,7 @@ public class ClienteService {
     @Transactional
     public ClienteResponseDTO buscarCliente(String cpf) {
         Cliente cliente = clienteRepository.findById(cpf)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new ClientNotFound("Cliente não encontrado"));
         return clienteMapper.toResponseDTO(cliente);
     }
 

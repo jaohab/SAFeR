@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
+import com.devsDoAgi.SAFeR.exception.AccounNotFound;
 import org.springframework.stereotype.Service;
 
 import com.devsDoAgi.SAFeR.dto.ContaRequestDTO;
@@ -84,7 +85,7 @@ public class ContaService {
     @Transactional
     public ContaResponseDTO buscarConta(String numConta) {
         Conta conta = contaRepository.findById(numConta)
-                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+                .orElseThrow(() -> new AccounNotFound("Conta não encontrada"));
         return contaMapper.toResponseDTO(conta);
     }
 
