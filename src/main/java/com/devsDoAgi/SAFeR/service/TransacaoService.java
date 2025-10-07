@@ -43,7 +43,8 @@ public class TransacaoService {
         return transacaoMapper.toResponseDTO(salva);
     }
 
-    @Transactional TransacaoResponseDTO criarEValidarTransacao(TransacaoRequestDTO dto) {
+    @Transactional
+    public TransacaoResponseDTO criarEValidarTransacao(TransacaoRequestDTO dto) {
         Transacao transacao = transacaoMapper.toEntity(dto);
 
         // Chama o motor de regras

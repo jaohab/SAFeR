@@ -2,6 +2,9 @@ package com.devsDoAgi.SAFeR.controller;
 
 import java.util.List;
 
+import com.devsDoAgi.SAFeR.mapper.TransacaoMapper;
+import com.devsDoAgi.SAFeR.model.Transacao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +27,12 @@ public class TransacaoController {
 
     public TransacaoController(TransacaoService transacaoService) {
         this.transacaoService = transacaoService;
+    }
+
+
+    @PostMapping("/testeRegras")
+    public TransacaoResponseDTO validarTransacao(@RequestBody TransacaoRequestDTO dto){
+        return transacaoService.criarEValidarTransacao(dto);
     }
 
     @PostMapping
