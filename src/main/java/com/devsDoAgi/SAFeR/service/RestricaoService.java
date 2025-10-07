@@ -2,6 +2,7 @@ package com.devsDoAgi.SAFeR.service;
 
 import java.util.List;
 
+import com.devsDoAgi.SAFeR.exception.RestrictionNotFound;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -34,7 +35,7 @@ public class RestricaoService {
     @Transactional
     public RestricaoResponseDTO buscarPorCPF(String id) {
         Restricao restricao = restricaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("CPF não encontrado"));
+                .orElseThrow(() -> new RestrictionNotFound("CPF não encontrado"));
         return restricaoMapper.toResponseDTO(restricao);
     }
 
