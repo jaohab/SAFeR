@@ -24,8 +24,7 @@ public class TransacaoService {
     private final ContaRepository contaRepository;
     private final TransacaoMapper transacaoMapper;
 
-    public TransacaoService(TransacaoRepository transacaoRepository, ContaRepository contaRepository,
-            TransacaoMapper transacaoMapper) {
+    public TransacaoService(TransacaoRepository transacaoRepository, ContaRepository contaRepository, TransacaoMapper transacaoMapper) {
         this.transacaoRepository = transacaoRepository;
         this.contaRepository = contaRepository;
         this.transacaoMapper = transacaoMapper;

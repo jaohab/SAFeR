@@ -79,4 +79,9 @@ public class RestricaoService {
         Restricao atualizada = restricaoRepository.save(restricao);
         return restricaoMapper.toResponseDTO(atualizada);
     }
+
+    public static Restricao findByCpf(String cpfDestino) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByCpf'");
+    }
 }

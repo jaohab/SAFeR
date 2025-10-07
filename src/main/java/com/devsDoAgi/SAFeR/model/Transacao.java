@@ -47,6 +47,8 @@ public class Transacao {
     @Enumerated(EnumType.STRING)
     private TransacaoMeioPagamento meioPagamento;
 
+    private int tentativas;
+
     // Dados da Conta de Origem
     private String numContaOrigem;
 
