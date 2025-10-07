@@ -10,15 +10,15 @@ public class app {
         // Transação de teste
         Transacao tx = new Transacao();
 
-        /*FraudEngine engine = new FraudEngine(List.of(
+        /*FraudEngine2 engine = new FraudEngine2(List.of(
                 new RuleValue(),
                 new RuleDestination(),
                 new RuleOrigen()
         ));*/
 
-        FraudEngine engine = new FraudEngine();
+        //FraudEngine engine = new FraudEngine();
 
-        FraudSummary summary = engine.analyze(tx);
+        //FraudSummary summary = engine.analyze(tx);
 
     }
 }

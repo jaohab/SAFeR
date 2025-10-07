@@ -3,6 +3,8 @@ package com.devsDoAgi.SAFeR.service;
 import java.util.List;
 
 import com.devsDoAgi.SAFeR.exception.TransactionNotFound;
+import com.devsDoAgi.SAFeR.fraudes.engine.FraudCompiler;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.devsDoAgi.SAFeR.repository.ContaRepository;
@@ -20,16 +22,18 @@ import com.devsDoAgi.SAFeR.model.Transacao;
 
 @Service
 public class TransacaoService {
-    
+
+    private final FraudCompiler fraudCompiler;
     private final TransacaoRepository transacaoRepository;
     private final ContaRepository contaRepository;
     private final TransacaoMapper transacaoMapper;
 
     public TransacaoService(TransacaoRepository transacaoRepository, ContaRepository contaRepository,
-            TransacaoMapper transacaoMapper) {
+            TransacaoMapper transacaoMapper, FraudCompiler fraudCompiler) {
         this.transacaoRepository = transacaoRepository;
         this.contaRepository = contaRepository;
         this.transacaoMapper = transacaoMapper;
+        this.fraudCompiler = fraudCompiler;
     }
 
     @Transactional
@@ -43,7 +47,7 @@ public class TransacaoService {
         Transacao transacao = transacaoMapper.toEntity(dto);
 
         // Chama o motor de regras
-        FraudEngine engine = new FraudEngine();
+        FraudEngine engine = new FraudEngine(fraudCompiler);
         // Analisa a transação
         FraudSummary summary = engine.analyze(transacao);
 
@@ -97,7 +101,7 @@ public class TransacaoService {
                 .orElseThrow(() -> new RuntimeException("Transação não encontrada"));
                 
             // Chama o motor de regras
-            FraudEngine engine = new FraudEngine();
+            FraudEngine engine = new FraudEngine(fraudCompiler);
             // Analisa a transação
             FraudSummary summary = engine.analyze(transacao);
 

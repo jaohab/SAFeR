@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import com.devsDoAgi.SAFeR.fraudes.engine.FraudResult;
 import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;
 import com.devsDoAgi.SAFeR.model.Transacao;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe de regra
@@ -14,9 +16,9 @@ import com.devsDoAgi.SAFeR.model.Transacao;
  * @version 0.5
  */
 
-public class RuleValor implements FraudRule {
-
-    private String ruleName = "Regra de valor";
+@Component
+@NoArgsConstructor
+public class RegraModelo implements FraudRule {
 
     /**
      * Override evaluate -> Regra de valor
@@ -28,7 +30,9 @@ public class RuleValor implements FraudRule {
 
     @Override
     public FraudResult evaluate(Transacao transacao) {
-        
+
+        String ruleName = "Regra de valor";
+
         if (transacao.getValor().compareTo(new BigDecimal(5000.00)) > 0) {
             return new FraudResult(ruleName, 10);
         }
