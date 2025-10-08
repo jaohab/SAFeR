@@ -45,14 +45,15 @@ public class RuleTime implements FraudRule {
             }
 
             if (value.compareTo(limiteNoturno) > 0) {
-                FraudResult fraudResult = new FraudResult("Regra horário de risco",50);
+                FraudResult fraudResult = new FraudResult("Regra horário de risco",90);
                 return fraudResult;
             }
+
             if (value.compareTo(limiteNoturno) == 0){
-                FraudResult fraudResult = new FraudResult("Regra horário de risco",10);
+                FraudResult fraudResult = new FraudResult("Regra horário de risco",21);
                 return fraudResult;
             }
         }
-        return new FraudResult("Regra horário de risco",5);
+        return new FraudResult("Regra horário de risco",0);
     }
 }

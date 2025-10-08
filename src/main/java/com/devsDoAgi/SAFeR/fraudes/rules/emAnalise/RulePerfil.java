@@ -45,9 +45,9 @@ public class RulePerfil implements FraudRule {
 
         List<Transacao> historico = conta.getHistoricoTransacoes();
 
-        // 1ª Validação: Se o histórico tiver menos de 10 transações, retorna 10
+        // 1ª Validação: Se o histórico tiver menos de 10 transações, retorna 7
         if (historico.size() < 10) {
-            return new FraudResult(ruleName, 50);
+            return new FraudResult(ruleName, 7);
         }
 
         // 2ª Validação: Se o histórico tiver 10 ou mais transações, aplica o modelo de
@@ -103,7 +103,7 @@ public class RulePerfil implements FraudRule {
 
             // Avalia a nova transação
             if (scoreNovaTransacao >= threshold) {
-                return new FraudResult(ruleName, 50); // Transação suspeita
+                return new FraudResult(ruleName, 14); // Transação suspeita
             } else {
                 return new FraudResult(ruleName, 0); // Transação normal
             }

@@ -17,17 +17,16 @@ public class RulePeriodicity implements FraudRule {
 
     private TransacaoRepository transacaoRepository;
 
-
     @Override
     public FraudResult evaluate(Transacao transaction) {
 
         List<Transacao> transactionsLastHour = getLastHour(transaction);
 
-
+        //Verifica se a quantidade de transações da ultima hora + transação atual ultrapassa
         if (transactionsLastHour.size() + 1 < 3) {
             return new FraudResult("Regra de periodicidade", 0);
         }
-        int totalScore = 5;
+        int totalScore = 7;
 
         totalScore += scoreByFrequency(transactionsLastHour, transaction);
         totalScore += scoreByDestinations(transactionsLastHour);
@@ -41,7 +40,7 @@ public class RulePeriodicity implements FraudRule {
         Duration average = intervals.stream()
                 .reduce(Duration.ofMinutes(0), (i, i2) -> i.plusMinutes(i2.toMinutes()))
                 .dividedBy(intervals.size());
-        return average.compareTo(Duration.ofMinutes(15)) < 0 ? 5 : 0;
+        return average.compareTo(Duration.ofMinutes(15)) < 0 ? 7 : 0;
     }
 
     private int scoreByDestinations(List<Transacao> transactions) {
@@ -49,7 +48,7 @@ public class RulePeriodicity implements FraudRule {
         int totalScore = 0;
         for (Map.Entry<String, Integer> entry : destinationsOccurrences.entrySet())
             if (entry.getValue() >= 3) {
-                totalScore += 5;
+                totalScore += 7;
             }
         return totalScore;
     }
@@ -59,7 +58,7 @@ public class RulePeriodicity implements FraudRule {
         HashMap<BigDecimal, Integer> valueOccurrences = getValueOccurrences(transactions);
         for (Map.Entry<BigDecimal, Integer> entry: valueOccurrences.entrySet()){
             if (entry.getValue() >= 3){
-                totalScore += 5;
+                totalScore += 7;
             }
         }
         return totalScore;

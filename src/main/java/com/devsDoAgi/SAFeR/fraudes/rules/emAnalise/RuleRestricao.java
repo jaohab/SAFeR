@@ -41,16 +41,15 @@ public class RuleRestricao implements FraudRule {
 
         if (restricao != null) {
             if (restricao.getStatus().equals(RestricaoStatus.CANCELADO)) {
-                return new FraudResult(ruleName, 60);
+                return new FraudResult(ruleName, 90);
             } else if (restricao.getStatus().equals(RestricaoStatus.BLOQUEADO)) {
-                return new FraudResult(ruleName, 60);
+                return new FraudResult(ruleName, 90);
             } else if (restricao.getStatus().equals(RestricaoStatus.COM_RESTRICAO)) {
-                return new FraudResult(ruleName, 10);
+                return new FraudResult(ruleName, 7);
             } else if (restricao.getStatus().equals(RestricaoStatus.SEM_RESTRICAO)) {
                 return new FraudResult(ruleName, 0);
             }
         }
-        
         return new FraudResult(ruleName, 0);
     }
 }

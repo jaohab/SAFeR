@@ -63,7 +63,6 @@ public class RuleValue implements FraudRule {
         BigDecimal tolerance = calcToleranceOverCelling(ceiling);
         BigDecimal transactionValue = transacao.getValor();
 
-
         //  Verifica se o valor da transação é menor ou igual ao teto de alarme
 
         //  a.compareTo(b) -> retornará
@@ -74,16 +73,10 @@ public class RuleValue implements FraudRule {
         if (ceiling.compareTo(transactionValue) > 0){
             return new FraudResult("Value rule", 0);
         } else if (transactionValue.compareTo(ceiling) == 0 && transactionValue.compareTo(tolerance) == -1) {
-            return new FraudResult("Value rule", 10);
+            return new FraudResult("Value rule", 7);
         } else {
-            return new FraudResult("Value rule", 50); //Automaticamente confirmado como fraude
+            return new FraudResult("Value rule", 90); //Automaticamente confirmado como fraude
         }
-
     }
-
-//    public boolean isHighValue (Transacao transacao){ //Metodo para auxilio de outras regras
-//        FraudResult resultadoFraude = evaluate(transacao);
-//        return resultadoFraude.getScore() >= 10;
-//    }
 
 }
