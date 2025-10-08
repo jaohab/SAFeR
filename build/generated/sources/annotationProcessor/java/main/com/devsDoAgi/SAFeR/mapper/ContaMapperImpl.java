@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-07T09:12:51-0300",
-    comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.14.3.jar, environment: Java 21.0.5 (Oracle Corporation)"
+    date = "2025-10-08T11:32:58-0300",
+    comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.14.3.jar, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
 public class ContaMapperImpl implements ContaMapper {
@@ -116,6 +116,11 @@ public class ContaMapperImpl implements ContaMapper {
         transacao.setCpfCnpjDestino( transacaoRequestDTO.getCpfCnpjDestino() );
         transacao.setScoreTransacao( transacaoRequestDTO.getScoreTransacao() );
         transacao.setTransacaoAnalisada( transacaoRequestDTO.isTransacaoAnalisada() );
+        transacao.setTipoCartao( transacaoRequestDTO.getTipoCartao() );
+        transacao.setCanalAtual( transacaoRequestDTO.getCanalAtual() );
+        transacao.setCanalUsual( transacaoRequestDTO.getCanalUsual() );
+        transacao.setTentativasErradasCVV( transacaoRequestDTO.getTentativasErradasCVV() );
+        transacao.setTentativasErradasSenha( transacaoRequestDTO.getTentativasErradasSenha() );
 
         return transacao;
     }

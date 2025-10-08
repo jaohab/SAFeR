@@ -2,6 +2,7 @@ package com.devsDoAgi.SAFeR.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,10 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-// Responsável por retornar informações completas.
 public class TransacaoResponseDTO {
-    private Long idTransacao;
     private BigDecimal valor;
     private LocalDateTime dataHoraOperacao;
     private String dispositivo;
@@ -29,4 +27,5 @@ public class TransacaoResponseDTO {
     private String cpfCnpjDestino;
     private int scoreTransacao;
     private boolean transacaoAnalisada;
+    private List<String> motivos;
 }

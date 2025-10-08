@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-07T09:12:50-0300",
-    comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.14.3.jar, environment: Java 21.0.5 (Oracle Corporation)"
+    date = "2025-10-08T11:32:58-0300",
+    comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.14.3.jar, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
 public class TransacaoMapperImpl implements TransacaoMapper {
@@ -49,6 +49,11 @@ public class TransacaoMapperImpl implements TransacaoMapper {
         transacao.setCpfCnpjDestino( dto.getCpfCnpjDestino() );
         transacao.setScoreTransacao( dto.getScoreTransacao() );
         transacao.setTransacaoAnalisada( dto.isTransacaoAnalisada() );
+        transacao.setTipoCartao( dto.getTipoCartao() );
+        transacao.setCanalAtual( dto.getCanalAtual() );
+        transacao.setCanalUsual( dto.getCanalUsual() );
+        transacao.setTentativasErradasCVV( dto.getTentativasErradasCVV() );
+        transacao.setTentativasErradasSenha( dto.getTentativasErradasSenha() );
 
         return transacao;
     }
@@ -61,7 +66,6 @@ public class TransacaoMapperImpl implements TransacaoMapper {
 
         TransacaoResponseDTO transacaoResponseDTO = new TransacaoResponseDTO();
 
-        transacaoResponseDTO.setIdTransacao( transacao.getIdTransacao() );
         transacaoResponseDTO.setValor( transacao.getValor() );
         transacaoResponseDTO.setDataHoraOperacao( transacao.getDataHoraOperacao() );
         if ( transacao.getDispositivo() != null ) {

@@ -28,7 +28,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Transacao {
 
-    // Dados Gerais
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTransacao;
@@ -43,36 +42,30 @@ public class Transacao {
 
     private Double[] local;
 
-    // Forma de pagamento
     @Enumerated(EnumType.STRING)
     private TransacaoMeioPagamento meioPagamento;
 
-    // Dados da Conta de Origem
     private String numContaOrigem;
-
     private String numAgenciaOrigem;
-
     private String ispbOrigem;
-
     private String cpfOrigem;
 
-    // Dados da Conta de Destino
     private String numContaDestino;
-
     private String numAgenciaDestino;
-
     private String ispbDestino;
-
     private String cpfCnpjDestino;
 
     private int scoreTransacao;
-
     private boolean transacaoAnalisada;
 
-    // Relacionamento com Conta
     @ManyToOne
     @JoinColumn(name = "numConta", referencedColumnName = "numConta")
     @JsonIgnore
     private Conta conta;
-    
+
+    private String tipoCartao;
+    private String canalAtual;
+    private String canalUsual;
+    private Integer tentativasErradasCVV;
+    private Integer tentativasErradasSenha;
 }

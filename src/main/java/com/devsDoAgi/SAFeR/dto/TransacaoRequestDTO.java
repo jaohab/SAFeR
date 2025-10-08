@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-// Reponsável por criação/atualização.
 public class TransacaoRequestDTO {
     private BigDecimal valor;
     private LocalDateTime dataHoraOperacao;
@@ -28,4 +26,9 @@ public class TransacaoRequestDTO {
     private String cpfCnpjDestino;
     private int scoreTransacao;
     private boolean transacaoAnalisada;
+    private String tipoCartao;
+    private String canalAtual;
+    private String canalUsual;
+    private Integer tentativasErradasCVV;
+    private Integer tentativasErradasSenha;
 }
