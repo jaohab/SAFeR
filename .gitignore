@@ -79,6 +79,7 @@ target/
 # =========================
 # Evita erros de dados de cache
 # =========================
+
 .gradle/8.14.3/checksums/checksums.lock
 .gradle/8.14.3/checksums/md5-checksums.bin
 .gradle/8.14.3/checksums/sha1-checksums.bin

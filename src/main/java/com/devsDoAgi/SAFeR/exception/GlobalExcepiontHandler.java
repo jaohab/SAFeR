@@ -74,4 +74,14 @@ public class GlobalExcepiontHandler {
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+    @ExceptionHandler(EmptyNightLimit.class)
+    public ResponseEntity<ErroResponseDTO> handleEmptyLimit(EmptyNightLimit ex, HttpServletRequest request){
+        ErroResponseDTO error = new ErroResponseDTO(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                request.getRequestURI()
+                );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 }
