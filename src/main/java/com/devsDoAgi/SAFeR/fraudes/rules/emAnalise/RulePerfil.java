@@ -12,6 +12,7 @@ import com.devsDoAgi.SAFeR.model.Conta;
 import com.devsDoAgi.SAFeR.model.Transacao;
 import com.devsDoAgi.SAFeR.repository.ContaRepository;
 
+import org.springframework.stereotype.Component;
 import smile.anomaly.IsolationForest;
 
 /**
@@ -22,6 +23,7 @@ import smile.anomaly.IsolationForest;
  * @version 0.5
  */
 
+@Component
 public class RulePerfil implements FraudRule {
 
     private String ruleName = "Regra de Análise de Perfil do Cliente | IA";

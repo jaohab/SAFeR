@@ -3,15 +3,17 @@ package com.devsDoAgi.SAFeR.fraudes.rules.emAnalise;
 import com.devsDoAgi.SAFeR.fraudes.engine.FraudResult;
 import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;
 import com.devsDoAgi.SAFeR.model.Transacao;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RuleCanal implements FraudRule {
 
     private static final String RULE_NAME = "Regra de Canal/Origem";
 
-    private static final int SCORE_BLOQUEIO_PREVENTIVO = 30;
-    private static final int SCORE_ALERTA_CARTAO_CREDITO = 5;
-    private static final int SCORE_MUDANCA_CANAL_CRITICA = 15;
-    private static final int SCORE_MUDANCA_CANAL_GENERICA = 10;
+    private static final int SCORE_BLOQUEIO_PREVENTIVO = 90;
+    private static final int SCORE_ALERTA_CARTAO_CREDITO = 7;
+    private static final int SCORE_MUDANCA_CANAL_CRITICA = 14;
+    private static final int SCORE_MUDANCA_CANAL_GENERICA = 7;
 
     private static final int LIMITE_TENTATIVAS = 3;
     private static final String TIPO_CREDITO = "CREDITO";
