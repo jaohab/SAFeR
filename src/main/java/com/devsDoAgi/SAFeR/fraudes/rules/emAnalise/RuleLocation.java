@@ -21,10 +21,11 @@ public class RuleLocation implements FraudRule {
 
     @Autowired
     TransacaoRepository transacaoRepository;
-    SpatialContext ctx = SpatialContext.GEO;
+
 
     private Double calcDistanceInKm(Transacao currentTrasaction, Transacao lastTransaction) { //A transação anterior será inserida no construtor diretamente, a validaçção do get será feita no generalista da classe
 
+        SpatialContext ctx = SpatialContext.GEO;
         Double currentlongitude = currentTrasaction.getLocal()[0];
         Double currentLatitude = currentTrasaction.getLocal()[1];
 
