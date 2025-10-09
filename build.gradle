@@ -53,6 +53,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	//SPATIAL4J
+	implementation 'org.locationtech.spatial4j:spatial4j:0.8'
+
+
 }
 
 tasks.named('test') {
