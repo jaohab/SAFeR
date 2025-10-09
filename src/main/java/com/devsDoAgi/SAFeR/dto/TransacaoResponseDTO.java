@@ -2,7 +2,6 @@ package com.devsDoAgi.SAFeR.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +26,9 @@ public class TransacaoResponseDTO {
     private String cpfCnpjDestino;
     private int scoreTransacao;
     private boolean transacaoAnalisada;
-    private List<String> motivos;
+    private String tipoCartao;
+    private String canalAtual;
+    private String canalUsual;
+    private Integer tentativasErradasCVV;
+    private Integer tentativasErradasSenha;
 }

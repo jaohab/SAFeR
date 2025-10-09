@@ -96,3 +96,4 @@ target/
 .gradle/file-system.probe
 .gradle/vcs-1/gc.properties
 build/reports/problems/problems-report.html
+build/reports/problems/problems-report.html

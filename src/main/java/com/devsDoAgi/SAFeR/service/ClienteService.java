@@ -3,7 +3,6 @@ package com.devsDoAgi.SAFeR.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.devsDoAgi.SAFeR.exception.AccounNotFound;
 import com.devsDoAgi.SAFeR.exception.ClientNotFound;
 import org.springframework.stereotype.Service;
 
