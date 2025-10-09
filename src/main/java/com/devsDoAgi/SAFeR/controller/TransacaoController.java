@@ -2,12 +2,10 @@ package com.devsDoAgi.SAFeR.controller;
 
 import java.util.List;
 
-import com.devsDoAgi.SAFeR.mapper.TransacaoMapper;
-import com.devsDoAgi.SAFeR.model.Transacao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,16 +27,22 @@ public class TransacaoController {
         this.transacaoService = transacaoService;
     }
 
-
-    @PostMapping("/testeRegras")
-    public TransacaoResponseDTO validarTransacao(@RequestBody TransacaoRequestDTO dto){
-        return transacaoService.criarEValidarTransacao(dto);
-    }
-
     @PostMapping
     public ResponseEntity<TransacaoResponseDTO> criarTransacao(@RequestBody TransacaoRequestDTO dto) {
         TransacaoResponseDTO novaTransacao = transacaoService.criarTransacao(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaTransacao);
+    }
+
+    @PostMapping("/cria_valida")
+    public ResponseEntity<TransacaoResponseDTO> criarEValidarTransacao(@RequestBody TransacaoRequestDTO dto) {
+        TransacaoResponseDTO novaTransacao = transacaoService.criarEValidarTransacao(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaTransacao);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<TransacaoResponseDTO> validarTransacao(@PathVariable Long id) {
+        TransacaoResponseDTO transacaoValidada = transacaoService.validarTransacao(id);
+        return ResponseEntity.ok(transacaoValidada);
     }
 
     @GetMapping("/{id}")

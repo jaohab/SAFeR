@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.devsDoAgi.SAFeR.exception.TransactionNotFound;
 import com.devsDoAgi.SAFeR.fraudes.engine.FraudCompiler;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.devsDoAgi.SAFeR.repository.ContaRepository;
