@@ -28,7 +28,7 @@ public class FraudCompiler {
     @PostConstruct
     public void init() {
         // List de todas as regras
-        this.regras = List.of(ruleValue, regraModelo);
+        this.regras = List.of(ruleValue);
 }
 
     public FraudSummary percorrerRegras(Transacao transacao) {

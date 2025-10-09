@@ -72,7 +72,7 @@ public class RuleValue implements FraudRule {
 
         if (ceiling.compareTo(transactionValue) > 0){
             return new FraudResult("Value rule", 0);
-        } else if (transactionValue.compareTo(ceiling) == 0 && transactionValue.compareTo(tolerance) == -1) {
+        } else if (transactionValue.compareTo(ceiling) > 0 && transactionValue.compareTo(tolerance) < 0) {
             return new FraudResult("Value rule", 7);
         } else {
             return new FraudResult("Value rule", 90); //Automaticamente confirmado como fraude
