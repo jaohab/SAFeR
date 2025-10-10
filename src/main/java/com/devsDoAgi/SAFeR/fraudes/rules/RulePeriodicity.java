@@ -1,4 +1,4 @@
-package com.devsDoAgi.SAFeR.fraudes.rules.emAnalise;
+package com.devsDoAgi.SAFeR.fraudes.rules;
 
 import com.devsDoAgi.SAFeR.fraudes.engine.FraudResult;
 import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;

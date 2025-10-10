@@ -1,4 +1,4 @@
-package com.devsDoAgi.SAFeR.fraudes.rules.emAnalise;
+package com.devsDoAgi.SAFeR.fraudes.rules;
 
 import com.devsDoAgi.SAFeR.exception.AccounNotFound;
 import com.devsDoAgi.SAFeR.exception.EmptyNightLimit;

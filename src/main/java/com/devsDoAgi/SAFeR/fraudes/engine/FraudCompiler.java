@@ -1,11 +1,7 @@
 package com.devsDoAgi.SAFeR.fraudes.engine;
 
 import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;
-import com.devsDoAgi.SAFeR.fraudes.rules.RegraModelo;
-import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RuleLocation;
-import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RulePeriodicity;
-import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RuleTime;
-import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RuleValue;
+import com.devsDoAgi.SAFeR.fraudes.rules.*;
 import com.devsDoAgi.SAFeR.model.Transacao;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -23,21 +19,20 @@ public class FraudCompiler {
 
     private List<FraudRule> regras;
 
-    private RuleValue ruleValue;
-
-    private RuleTime ruleTime;
-
-    private RulePeriodicity rulePeriodicity;
-
-    private RegraModelo regraModelo;
-
+    private RuleCanal ruleCanal;
+    private RuleDeviceMismatch ruleDeviceMismatch;
     private RuleLocation ruleLocation;
+    private RulePerfil rulePerfil;
+    private RulePeriodicity rulePeriodicity;
+    private RuleRestricao ruleRestricao;
+    private RuleTime ruleTime;
+    private RuleValue ruleValue;
 
     //Criação da lista após injeção de beans de regra
     @PostConstruct
     public void init() {
         // List de todas as regras
-        this.regras = List.of(ruleLocation);
+        this.regras = List.of(ruleCanal, ruleDeviceMismatch, ruleLocation, rulePerfil, rulePeriodicity, ruleRestricao, ruleTime, ruleValue);
 }
 
     public FraudSummary percorrerRegras(Transacao transacao) {
