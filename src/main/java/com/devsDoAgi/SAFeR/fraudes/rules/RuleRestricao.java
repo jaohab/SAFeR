@@ -11,12 +11,14 @@ import com.devsDoAgi.SAFeR.model.Transacao;
 import com.devsDoAgi.SAFeR.repository.RestricaoRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * Classe de regra
  * Implementa FraudRule
  *
  * @author  João Henrique
- * @version 0.5 
+ * @version 0.5
  */
 
 @Component
@@ -34,14 +36,15 @@ public class RuleRestricao implements FraudRule {
 
     @Autowired
     private RestricaoRepository restricaoRepository;
-    
+
     @Override
     public FraudResult evaluate(Transacao transacao) {
 
-        Restricao restricao = restricaoRepository.findById(transacao.getCpfCnpjDestino())
-                .orElseThrow(() -> new RestrictionNotFound("CPF não encontrado"));
 
-        if (restricao != null) {
+        Optional<Restricao> restricaoOptional = restricaoRepository.findById(transacao.getCpfCnpjDestino());
+
+        if (restricaoOptional.isPresent()) {
+            Restricao restricao = restricaoOptional.get();
             if (restricao.getStatus().equals(RestricaoStatus.CANCELADO)) {
                 return new FraudResult(ruleName, 90);
             } else if (restricao.getStatus().equals(RestricaoStatus.BLOQUEADO)) {
