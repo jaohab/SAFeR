@@ -23,7 +23,7 @@ public class RulePeriodicity implements FraudRule {
         List<Transacao> transactionsLastHour = getLastHour(transaction);
 
         //Verifica se a quantidade de transações da ultima hora + transação atual ultrapassa
-        if (transactionsLastHour.size() + 1 < 3) {
+        if (transactionsLastHour.size() + 1 <= 3) {
             return new FraudResult("Regra de periodicidade", 0);
         }
         int totalScore = 7;

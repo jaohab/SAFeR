@@ -2,6 +2,9 @@ package com.devsDoAgi.SAFeR.fraudes.engine;
 
 import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;
 import com.devsDoAgi.SAFeR.fraudes.rules.RegraModelo;
+import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RuleLocation;
+import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RulePeriodicity;
+import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RuleTime;
 import com.devsDoAgi.SAFeR.fraudes.rules.emAnalise.RuleValue;
 import com.devsDoAgi.SAFeR.model.Transacao;
 import jakarta.annotation.PostConstruct;
@@ -22,13 +25,19 @@ public class FraudCompiler {
 
     private RuleValue ruleValue;
 
+    private RuleTime ruleTime;
+
+    private RulePeriodicity rulePeriodicity;
+
     private RegraModelo regraModelo;
+
+    private RuleLocation ruleLocation;
 
     //Criação da lista após injeção de beans de regra
     @PostConstruct
     public void init() {
         // List de todas as regras
-        this.regras = List.of(ruleValue);
+        this.regras = List.of(ruleLocation);
 }
 
     public FraudSummary percorrerRegras(Transacao transacao) {

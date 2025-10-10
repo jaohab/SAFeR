@@ -25,15 +25,14 @@ public class RuleTime implements FraudRule {
         LocalTime transactionTime = LocalTime.of(dataTransacao.getHour(),dataTransacao.getMinute(),dataTransacao.getSecond());
         LocalTime startTimeRisk = LocalTime.of(20,00,00);
         LocalTime endTimeRisk = LocalTime.of(06,00,00);
-
         return (transactionTime.isAfter(startTimeRisk) || transactionTime.isBefore(endTimeRisk));
     }
 
     @Override
     public FraudResult evaluate(Transacao transacao) {
 
-        System.out.println("Is in risk time: ");
-        System.out.println(isInRiskTime(transacao));
+        int baseRiskTimeScore = 7;
+
         if (isInRiskTime(transacao)) {
 
             Conta conta = contaRepository.findById(transacao.getNumContaOrigem()).orElseThrow(() -> new AccounNotFound("Conta não encontrada"));
@@ -53,6 +52,7 @@ public class RuleTime implements FraudRule {
                 FraudResult fraudResult = new FraudResult("Regra horário de risco",21);
                 return fraudResult;
             }
+            return new FraudResult("Regra horário de risco", baseRiskTimeScore);
         }
         return new FraudResult("Regra horário de risco",0);
     }
