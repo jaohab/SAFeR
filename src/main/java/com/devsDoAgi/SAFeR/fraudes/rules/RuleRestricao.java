@@ -9,6 +9,7 @@ import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;
 import com.devsDoAgi.SAFeR.model.Restricao;
 import com.devsDoAgi.SAFeR.model.Transacao;
 import com.devsDoAgi.SAFeR.repository.RestricaoRepository;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe de regra
@@ -18,6 +19,7 @@ import com.devsDoAgi.SAFeR.repository.RestricaoRepository;
  * @version 0.5 
  */
 
+@Component
 public class RuleRestricao implements FraudRule {
 
     private String ruleName = "Regra de Análise de Restrição em CPF/CNPJ de Destino";
