@@ -1,11 +1,9 @@
 package com.devsDoAgi.SAFeR.fraudes.rules;
 
-import com.devsDoAgi.SAFeR.exception.AccounNotFound;
 import com.devsDoAgi.SAFeR.fraudes.engine.FraudResult;
 import com.devsDoAgi.SAFeR.fraudes.interfaces.FraudRule;
-import com.devsDoAgi.SAFeR.model.Conta;
 import com.devsDoAgi.SAFeR.model.Transacao;
-import com.devsDoAgi.SAFeR.repository.ContaRepository;
+import com.devsDoAgi.SAFeR.repository.TransacaoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,36 +13,30 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-/**
- * Classe destinada a alocar avaliações sob o valor da nova transação
- * E calcular informações com base no histórico do cliente
- *
- * @author  Luan Silva
- * @version 0.5
- */
-
 @AllArgsConstructor
 @Data
 @Component
 public class RuleValue implements FraudRule {
 
     @Autowired
-    ContaRepository contaRepository;
+    TransacaoRepository transacaoRepository;
 
     public BigDecimal calculateCeiling (Transacao transacao){ // Calculo do teto medio para alarme de acordo com histórico do cliente
 
         final BigDecimal BASE_CEILING = new BigDecimal(1000.00);
 
-        Conta conta = contaRepository.findById(transacao.getNumContaOrigem()).orElseThrow(()-> new AccounNotFound("Conta não encontrada"));
-
-        List<Transacao> transacoes  = conta.getHistoricoTransacoes();
-
+        List<Transacao> transacoes = transacaoRepository.findBynumContaOrigem(transacao.getNumContaOrigem()).stream()
+                .filter(t -> t.getScoreTransacao() < 50)
+                .toList();
+        for (Transacao t : transacoes) {
+            System.out.println(t);
+        }
         if (transacoes.size() <= 10){ return BASE_CEILING; }
 
         BigDecimal averageValue  = transacoes.stream()
                 .map(t -> t.getValor())
                 .reduce(BigDecimal.valueOf(0),(v1,v2) -> v1.add(v2))
-                .divide(BigDecimal.valueOf(transacoes.size()),2, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(transacoes.size()),2, RoundingMode.HALF_UP).add(BASE_CEILING);
         return averageValue;
     }
 
@@ -78,5 +70,4 @@ public class RuleValue implements FraudRule {
             return new FraudResult("Value rule", 90); //Automaticamente confirmado como fraude
         }
     }
-
 }
