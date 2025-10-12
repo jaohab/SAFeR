@@ -57,7 +57,7 @@ public class RuleLocation implements FraudRule {
     public FraudResult evaluate(Transacao currentTransaction) {
 
         Duration maxAcceptablePeriod = Duration.ofHours(6); //Determina o periodo maximo entre transações para ativação da regra
-        Optional<Transacao> lastTransactionOptional = transacaoRepository.getLastTransaction();
+        Optional<Transacao> lastTransactionOptional = transacaoRepository.getLastTransaction(currentTransaction.getNumContaOrigem());
 
         if (lastTransactionOptional.isPresent()) { //Verifica se há transações anteriores
 
@@ -70,6 +70,7 @@ public class RuleLocation implements FraudRule {
             Double lastLatitude = lastTransaction.getLocal()[1];
 
             if (currentlongitude != lastLongitude && currentLatitude != lastLatitude) {
+                System.out.println(currentlongitude + " " + currentLatitude);
                 // Tempo entre ultima transação e atual
                 Duration periodBtwTransaction = Duration.between(lastTransaction.getDataHoraOperacao(), currentTransaction.getDataHoraOperacao());
 
