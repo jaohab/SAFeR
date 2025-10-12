@@ -1,5 +1,6 @@
 package com.devsDoAgi.SAFeR.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,15 @@ public class TransacaoController {
     public ResponseEntity<TransacaoResponseDTO> atualizarTransacao(@PathVariable Long id, @RequestBody TransacaoRequestDTO dto) {
         TransacaoResponseDTO transacaoAtualizada = transacaoService.atualizarTransacao(id, dto);
         return ResponseEntity.ok(transacaoAtualizada);
+    }
+
+    @PostMapping("/many")
+    public List<TransacaoResponseDTO> createAndValidateMany(@RequestBody List<TransacaoRequestDTO> transacoesDto){
+        ArrayList<TransacaoResponseDTO> transacoesResponse = new ArrayList<>();
+        for (TransacaoRequestDTO tDto: transacoesDto){
+            transacoesResponse.add(transacaoService.criarEValidarTransacao(tDto));
+        }
+        return transacoesResponse;
     }
     
 }

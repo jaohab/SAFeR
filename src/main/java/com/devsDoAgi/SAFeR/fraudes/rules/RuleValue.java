@@ -28,9 +28,6 @@ public class RuleValue implements FraudRule {
         List<Transacao> transacoes = transacaoRepository.findBynumContaOrigem(transacao.getNumContaOrigem()).stream()
                 .filter(t -> t.getScoreTransacao() < 50)
                 .toList();
-        for (Transacao t : transacoes) {
-            System.out.println(t);
-        }
         if (transacoes.size() <= 10){ return BASE_CEILING; }
 
         BigDecimal averageValue  = transacoes.stream()

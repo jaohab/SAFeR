@@ -36,28 +36,50 @@ public class RulePeriodicity implements FraudRule {
         }
 
     private int scoreByFrequency(List<Transacao> transactions, Transacao current) {
-        List<Duration> intervals = calcIntervalBetween(transactions, current);
-        Duration average = intervals.stream()
+        List<Duration> allIntervals = new ArrayList<>();
+        for (int i = 0; i < transactions.size(); i++) {
+            Transacao t1 = transactions.get(i);
+            Transacao t2 = (i < transactions.size() - 1) ? transactions.get(i + 1) : current;
+            allIntervals.add(calcPeriod(t1, t2));
+        }
+        Duration average = allIntervals.stream()
                 .reduce(Duration.ofMinutes(0), (i, i2) -> i.plusMinutes(i2.toMinutes()))
-                .dividedBy(intervals.size());
+                .dividedBy(allIntervals.size());
         return average.compareTo(Duration.ofMinutes(15)) < 0 ? 7 : 0;
     }
 
     private int scoreByDestinations(List<Transacao> transactions) {
-        HashMap<String, Integer> destinationsOccurrences = getDestinationsOccurrences(transactions);
+        HashMap<String, Integer> destinationsOccurrences = new HashMap<>();
+        for (Transacao t : transactions) {
+            String cpfCnpj = t.getCpfCnpjDestino();
+            if (!destinationsOccurrences.containsKey(cpfCnpj)) {
+                destinationsOccurrences.put(cpfCnpj, 1);
+            } else {
+                Integer currentValue = destinationsOccurrences.get(cpfCnpj);
+                destinationsOccurrences.put(cpfCnpj, currentValue + 1);
+            }
+        }
         int totalScore = 0;
         for (Map.Entry<String, Integer> entry : destinationsOccurrences.entrySet())
             if (entry.getValue() >= 3) {
-                totalScore += 7;
+                totalScore = totalScore + (7 * entry.getValue());
             }
         return totalScore;
     }
 
     private int scoreByValues(List<Transacao> transactions) {
+        HashMap<BigDecimal, Integer> valueOccurrences = new HashMap<>();
         int totalScore = 0;
-        HashMap<BigDecimal, Integer> valueOccurrences = getValueOccurrences(transactions);
-        for (Map.Entry<BigDecimal, Integer> entry: valueOccurrences.entrySet()){
-            if (entry.getValue() >= 3){
+        for (Transacao t : transactions) {
+            BigDecimal value = t.getValor();
+            if (!valueOccurrences.containsKey(value)) {
+                valueOccurrences.put(value, 1);
+            } else {
+                valueOccurrences.put(value, valueOccurrences.get(value) + 1);
+            }
+        }
+        for (Map.Entry<BigDecimal, Integer> entry : valueOccurrences.entrySet()) {
+            if (entry.getValue() >= 3) {
                 totalScore += 7;
             }
         }
@@ -67,9 +89,7 @@ public class RulePeriodicity implements FraudRule {
     public List<Transacao> getLastHour(Transacao transaction) {
         LocalDateTime dataTransacao = transaction.getDataHoraOperacao();
         LocalDateTime lastHour = dataTransacao.minusHours(1);
-        List<Transacao> transacoes = transacaoRepository.findAll().stream()
-                .filter(t -> t.getNumContaDestino().equals(transaction.getNumContaDestino()))
-                .toList();
+        List<Transacao> transacoes = transacaoRepository.findBynumContaOrigem(transaction.getNumContaOrigem());
 
         ArrayList<Transacao> lastHourTransaction = new ArrayList<>();
         for (Transacao t: transacoes){
@@ -89,43 +109,5 @@ public class RulePeriodicity implements FraudRule {
         Duration intervalBtw = Duration.between(dataT1, dataT2);
         return intervalBtw;
 
-    }
-
-    private HashMap<String, Integer> getDestinationsOccurrences(List<Transacao> transactions) {
-        HashMap<String, Integer> destinationsOccurrences = new HashMap<>();
-
-        for (Transacao t : transactions) {
-            String cpfCnpj = t.getCpfCnpjDestino();
-            if (!destinationsOccurrences.containsKey(cpfCnpj)) {
-                destinationsOccurrences.put(cpfCnpj, 1);
-            } else {
-                Integer currentValue = destinationsOccurrences.get(cpfCnpj);
-                destinationsOccurrences.put(cpfCnpj, currentValue + 1);
-            }
-        }
-        return destinationsOccurrences;
-    }
-
-    private List<Duration> calcIntervalBetween(List<Transacao> transactions, Transacao currentTransaction) {
-        List<Duration> allIntervals = new ArrayList<>();
-        for (int i = 0; i < transactions.size(); i++) {
-            Transacao t1 = transactions.get(i);
-            Transacao t2 = (i < transactions.size() - 1) ? transactions.get(i + 1) : currentTransaction;
-            allIntervals.add(calcPeriod(t1, t2));
-        }
-        return allIntervals;
-    }
-
-    private HashMap<BigDecimal, Integer> getValueOccurrences(List<Transacao> transactions){
-        HashMap<BigDecimal, Integer> valueOccurrences = new HashMap<>();
-        for (Transacao t: transactions){
-            BigDecimal value = t.getValor();
-            if (!valueOccurrences.containsKey(value)) {
-                valueOccurrences.put(value, 1);
-            } else {
-                valueOccurrences.put(value, valueOccurrences.get(value) + 1);
-            }
-        }
-        return valueOccurrences;
     }
 }
